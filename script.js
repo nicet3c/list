@@ -1,22 +1,31 @@
-$(document).ready(function() {
-    fetch('video_list.json')
-        .then(response => response.json())
-        .then(data => {
-            let rows = '';
-            data.forEach(item => {
-                rows += `
-                    <tr>
-                        <td>${item.name}</td>
-                        <td>${item.format}</td>
-                        <td>${item.size}</td>
-                    </tr>
-                `;
+function jsonToJSTree(data, parentText = "") {
+    let result = [];
+    for (let key in data) {
+        if (typeof data[key] === "object") {
+            // پوشه
+            result.push({
+                text: key,
+                children: jsonToJSTree(data[key], key)
             });
-            $('#moviesTable tbody').html(rows);
-            $('#moviesTable').DataTable({
-                "language": {
-                    "url": "//cdn.datatables.net/plug-ins/1.13.6/i18n/fa.json"
-                }
+        } else {
+            // فایل
+            result.push({
+                text: `🎬 ${key} (${data[key]})`,
+                icon: "jstree-file"
             });
+        }
+    }
+    return result;
+}
+
+$(document).ready(function(){
+    $.getJSON("video_list.json", function(data){
+        const treeData = jsonToJSTree(data);
+        $('#jstree').jstree({
+            'core' : {
+                'data' : treeData
+            },
+            "plugins" : ["wholerow"]
         });
+    });
 });
