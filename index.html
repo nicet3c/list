@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="fa">
+<head>
+<meta charset="UTF-8">
+<title>Video List Viewer</title>
+<style>
+body { font-family: sans-serif; direction: rtl; padding: 20px; background: #f9f9f9; }
+h2 { margin-top: 0; }
+table { width: 100%; border-collapse: collapse; background: #fff; }
+th, td { border: 1px solid #ccc; padding: 8px; text-align: left; }
+th { cursor: pointer; background: #e8e8e8; }
+tr:nth-child(even) { background: #f5f5f5; }
+input { width: 100%; padding: 8px; margin-bottom: 10px; border: 1px solid #ccc; }
+.format-mp4 { color: #007BFF; font-weight: bold; }
+.format-mkv { color: #28A745; font-weight: bold; }
+.format-avi { color: #FF5733; font-weight: bold; }
+.format-mov { color: #8E44AD; font-weight: bold; }
+.format-flv { color: #E67E22; font-weight: bold; }
+#totalSize { font-weight: bold; margin: 10px 0; }
+</style>
+</head>
+<body>
+
+<h2>📂 لیست ویدئوها</h2>
+<div id="totalSize">مجموع حجم: 0 MB</div>
+<input type="text" id="search" placeholder="جستجو...">
+<table id="videoTable">
+<thead>
+<tr>
+<th onclick="sortTable('name')">نام ⬍</th>
+<th onclick="sortTable('ext')">پسوند ⬍</th>
+<th onclick="sortTable('size')">حجم (MB) ⬍</th>
+<th onclick="sortTable('path')">مسیر ⬍</th>
+</tr>
+</thead>
+<tbody></tbody>
+</table>
+
+<script>
+let tableData = [];
+let sortDirection = 1; // 1: asc, -1: desc
+let sortField = 'name';
+
+fetch('video_list.json')
+    .then(res => res.json())
+    .then(data => {
+        tableData = data;
+        renderTable(data);
+    });
+
+function renderTable(data) {
+    const tbody = document.querySelector('#videoTable tbody');
+    tbody.innerHTML = '';
+    let totalSize = 0;
+    data.forEach(item => {
+        const tr = document.createElement('tr');
+        totalSize += item.size;
+        tr.innerHTML = `
+            <td>${item.name}</td>
+            <td class="format-${item.ext.replace('.', '').toLowerCase()}">${item.ext}</td>
+            <td>${item.size.toFixed(2)}</td>
+            <td>${item.path}</td>
+        `;
+        tbody.appendChild(tr);
+    });
+    document.getElementById('totalSize').innerText = `مجموع حجم: ${totalSize.toFixed(2)} MB`;
+}
+
+document.getElementById('search').addEventListener('input', function() {
+    const val = this.value.toLowerCase();
+    const filtered = tableData.filter(item =>
+        item.name.toLowerCase().includes(val) ||
+        item.ext.toLowerCase().includes(val) ||
+        item.path.toLowerCase().includes(val)
+    );
+    renderTable(filtered);
+});
+
+function sortTable(field) {
+    if (sortField === field) {
+        sortDirection *= -1; // تغییر جهت مرتب‌سازی
+    } else {
+        sortField = field;
+        sortDirection = 1;
+    }
+    tableData.sort((a, b) => {
+        if (a[field] < b[field]) return -1 * sortDirection;
+        if (a[field] > b[field]) return 1 * sortDirection;
+        return 0;
+    });
+    renderTable(tableData);
+}
+</script>
+
+</body>
+</html>
