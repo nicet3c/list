@@ -1,0 +1,12 @@
+body {
+    font-family: tahoma, sans-serif;
+    direction: rtl;
+}
+table td, table th {
+    white-space: nowrap;
+}
+@media (max-width: 768px) {
+    table {
+        font-size: 14px;
+    }
+}
