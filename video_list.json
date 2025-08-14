@@ -1,5 +1,18 @@
 {
- 
+  "-G---.caf": "1.0 MB",
+  "-G---.zip": "0.4 MB",
+  ".device_info_7be530e1-f742-4566-b066-9a72c0a4b598": "0.0 MB",
+  "Cathy.exe": "0.06 MB",
+  "fulllist.txt": "1.47 MB",
+  "list.py": "0.0 MB",
+  "make_tree_list.py": "0.0 MB",
+  "Neisan-s2-e12.mp4": "411.69 MB",
+  "video_list.json": "1.93 MB",
+  "$RECYCLE.BIN": {
+    "S-1-5-21-1125217915-2824917642-2981683988-1001": {
+      "desktop.ini": "0.0 MB"
+    }
+  },
   "4k": {
     "4K Autumn Forest & Relaxing Piano Music - Beautifull Fall Leaf Colors_AVADL.BiZ.mp4": "2366.86 MB",
     "4K Peaceful Lake Sounds & Relaxing Piano Music. Canadian Goose, Swans and Seagulls_AVADL.BiZ.mp4": "2949.99 MB",
@@ -43,7 +56,13 @@
       }
     }
   },
- 
+  "app": {
+    ".env": "0.0 MB",
+    "MediaOrganizer.py": "0.02 MB",
+    "media_core.py": "0.0 MB",
+    "media_index.csv": "0.09 MB",
+    "organizer.log": "0.13 MB"
+  },
   "Documentary": {
     "Bethesda E3 2019 Press Conference 720p www.P30Day.com.mp4": "1068.14 MB",
     "FULL EA Play E3 2019 Presentation 720p www.P30Day.com.mp4": "1811.08 MB",
